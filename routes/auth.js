@@ -4,13 +4,13 @@ const router = express.Router();
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
-var fetchuser = require('../middleware/fetchuser');
-const JWT_SECRET = 'Mukulisatesterb$oy';
-// ROUTE 1: Create a User using: POST "/api/auth/createuser". No login required
-router.post('/createuser', [
+var fetchUser = require('../middleware/fetchUser');
+const JWT_SECRET = 'MKIsaTesterB$oy';
+// ROUTE 1: Create a User using: POST "/api/auth/createUser". No login required
+router.post('/createUser', [
   body('name', 'Enter a valid name').isLength({ min: 3 }),
   body('email', 'Enter a valid email').isEmail(),
-  body('password', 'Password must be atleast 5 characters').isLength({ min: 5 })
+  body('password', 'Password must be atLeast 5 characters').isLength({ min: 5 })
 ], async (req, res) => {
   let success = false;
   // If there are errors, return bad request and the errors.
@@ -38,10 +38,10 @@ router.post('/createuser', [
         id: user.id
       }
     };
-    const authtoken = jwt.sign(data, JWT_SECRET);
-    console.log(authtoken);
+    const authToken = jwt.sign(data, JWT_SECRET);
+    console.log(authToken);
     success = true;
-    res.json({ success, authtoken });
+    res.json({ success, authToken });
 
   } catch (error) {
     console.error(error.message);
@@ -77,9 +77,9 @@ router.post('/login', [
         id: user.id
       }
     }
-    const authtoken = jwt.sign(data, JWT_SECRET);
+    const authToken = jwt.sign(data, JWT_SECRET);
     success = true;
-    res.json({ success, authtoken });
+    res.json({ success, authToken });
 
   } catch (error) {
     console.error(error.message);
@@ -87,8 +87,8 @@ router.post('/login', [
   }
 })
 
-// ROUTE 3: Get logedin user details using: POST "/api/auth/getuser". Login required
-router.post('/getuser', fetchuser, async (req, res) => {
+// ROUTE 3: Get logIn user details using: POST "/api/auth/getUser". Login required
+router.post('/getUser', fetchUser, async (req, res) => {
 
   try {
     userId = req.user.id;
