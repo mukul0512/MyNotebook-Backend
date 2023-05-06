@@ -67,13 +67,15 @@ router.delete('/deleteNotes/:id', fetchUser, async (req, res) => {
     try {
         // Find the note to be deleted and delete it.
         let note = await Note.findById(req.params.id);
+        // console.log(note)
         if (!note) { return res.status(404).send("Not Found") }
 
         // Allow deletion only if user owns these notes
         if (note.user.toString() !== req.user.id) {
             return res.status(401).send("Not Allowed");
         }
-        note = await Note.findByIdAndDelete(req.params.id);
+        // note = await Note.findByIdAndDelete(req.params.id);
+        // console.log(note)
         res.json({ "Success": "Note has been deleted.", note: note });
     } catch (error) {
         console.error(error.message);
